@@ -1,3 +1,24 @@
+:root {
+  --white:            #ffffff;
+  --black:            #000000;
+  --sh-black:         #050505;
+  
+  --sh-grey:          #242424;
+
+  --sh-yellow:        #FEBB38;
+  --sh-dull-yellow:   #E4A80C;
+  --sh-dark-yellow:   #BE7E02;
+  --sh-light-yellow:  #FECD04;
+
+  --sh-red:           #FE0000;
+  --sh-light-red:     #B90103;
+  --sh-pale-red:      #7F1313;
+
+  --sh-brown:         #782B00;
+  --sh-blue:          #054EAA;
+}
+
+
 html,
 body {
   padding: 0;
