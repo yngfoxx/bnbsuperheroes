@@ -1,21 +1,24 @@
 :root {
   --white:            #ffffff;
   --black:            #000000;
-  --sh-black:         #050505;
-  
+  --sh-black:         #050505;  
   --sh-grey:          #242424;
-
   --sh-yellow:        #FEBB38;
   --sh-dull-yellow:   #E4A80C;
   --sh-dark-yellow:   #BE7E02;
   --sh-light-yellow:  #FECD04;
-
-  --sh-red:           #FE0000;
-  --sh-light-red:     #B90103;
+  --sh-red:           #B90103;
+  --sh-light-red:     #FE0000;
   --sh-pale-red:      #7F1313;
-
+  --sh-trans-red:     #b90103c7;
   --sh-brown:         #782B00;
   --sh-blue:          #054EAA;
+}
+
+/* Fonts */
+@font-face {
+  font-family: secularone;
+  src: url('../media/fonts/SecularOne-Regular.ttf');
 }
 
 
@@ -25,6 +28,8 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--sh-brown);
+  overflow: auto;
 }
 
 a {
