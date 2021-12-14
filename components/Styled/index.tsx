@@ -2,6 +2,9 @@ import styled from 'styled-components'
 
 import bnb_heroes_logo from '../../media/img/logo.png'
 import meteor from '../../media/img/meteor.png'
+import sky_img from '../../media/img/sky.jpg'
+
+import meteor_shower_2 from '../../media/img/tokenomic_layer_2.png'
 
 
 interface TopBarComponentProps {
@@ -9,7 +12,7 @@ interface TopBarComponentProps {
     height?: string;
 }
 export const TopBar: any = styled.div<TopBarComponentProps>`
-    position: fixed;
+    position: fixed !important;
     width: ${p => 'width' in p ? p.width : '100%'};
     height: ${p => 'height' in p ? p.height : '70px'};
     padding-bottom: 20px;
@@ -103,9 +106,13 @@ export const Curve = (props: any) => (
     </svg>
 )
 
-const ST_H1 = styled.h1`
+interface SectionTitleprops {
+    color?: string;
+    borderColor?: string;
+}
+const ST_H1 = styled.h1<SectionTitleprops>`
     font-family: 'secularone';
-    color: var(--white);
+    color: ${p => 'color' in p ? p.color : 'var(--white)'};
     font-size: 5vw;
     text-align: center;
     position: relative;
@@ -115,25 +122,26 @@ const ST_H1 = styled.h1`
     z-index: 99;
     margin-top: 0px;
 `
-const ST_LEFT = styled.span`
+const ST_LEFT = styled.span<SectionTitleprops>`
     width: 50%;
     height: 2px;
-    background-color: var(--white);
+    background-color: ${p => 'borderColor' in p ? p.borderColor : 'var(--white)'};
     margin: auto;
     margin-right: 50px;
     font-size: 30px;
 `
-const ST_RIGHT = styled.span`
+const ST_RIGHT = styled.span<SectionTitleprops>`
     width: 50%;
     height: 2px;
-    background-color: var(--white);
+    background-color: ${p => 'borderColor' in p ? p.borderColor : 'var(--white)'};
     margin: auto;
     margin-left: 50px;
 `
 export const SectionTitle = (props: any) => {
+    const borderColor = 'borderColor' in props ? props.borderColor : 'var(--white)'
     return (
-        <ST_H1>
-            <ST_LEFT />{props.children}<ST_RIGHT />
+        <ST_H1 {...props}>
+            <ST_LEFT borderColor={borderColor}/>{props.children}<ST_RIGHT borderColor={borderColor}/>
         </ST_H1>
     )
 }
@@ -144,7 +152,6 @@ export const Section = styled.div`
     background-position: center;
     background-size: cover;
 `
-
 export const TitleSectionWordings = (props: any) => {
     const Container = styled.div`
         display: block;
@@ -199,7 +206,6 @@ export const TitleSectionWordings = (props: any) => {
         </Container>
     )
 }
-
 export const ScrollDown = styled.span`
     position: absolute;
     bottom: -80px;
@@ -229,7 +235,6 @@ export const ScrollDown = styled.span`
         right: 17.5px;
     }
 `
-
 export const MeteorShower = styled.div`
     position: absolute;
     bottom: -300px;
@@ -241,7 +246,6 @@ export const MeteorShower = styled.div`
     background-position: center;
     background-repeat: no-repeat;
 `
-
 export const ComicContainer = styled.div`
     display: grid;
     grid-gap: 10px;
@@ -321,7 +325,6 @@ export const ComicContainer = styled.div`
         }
     }
 `
-
 export const AboutContainer = styled.div`
     max-width: 95vw;
     width: max-content;
@@ -331,14 +334,19 @@ export const AboutContainer = styled.div`
         margin-bottom: 100px;
     }
     .airdrop_img {
+        opacity: 0;
         margin: auto;
         background-color: var(--white);
+        background-image: url(${sky_img});
+        background-size: cover;
+        background-position: -20px 20px;
         border-radius: 20px;
         position: relative;
         max-width: 400px;
         min-width: 300px !important;
         height: 400px;
         flex: 100%;
+        transition: opacity .3s ease-in;
         & > span {
             position: absolute;
             top: 50%;
@@ -357,6 +365,11 @@ export const AboutContainer = styled.div`
         padding: 0px 100px;
         flex: 100%;
         max-height: 300px;
+        @media screen and (max-width: 1570px) {
+            max-height: none;
+            padding-top: 100px;
+            text-align: center;
+        }
         @media screen and (max-width: 1200px) {
             padding: 0px;
             padding-top: 70px;
@@ -365,7 +378,76 @@ export const AboutContainer = styled.div`
         }
     }
 `
+export const TokenomicContainer = styled.div`
+    max-width: 80vw;
+    margin: auto;
+    @media screen and (max-width: 1200px) {
+        max-width: 100vw !important;
+    }
+    .stack {
+        justify-content: center;
+        @media screen and (max-width: 1200px) {
+            width: 100%;
+        }
+    }
+`
+export const TokenomicTab = (props: any) => {
+    const Container = styled.div`
+        background-color: #96c8fb;
+        background-image: linear-gradient(315deg, #96c8fb 0%, #ddbdfc 74%);
+        color: var(--white);
+        max-width: 350px;
+        height: ${'slab' in props? '190px': '400px'};
+        padding: 10px 15px;
+        border-radius: 15px;
+        margin: 20px 40px;
+        display: flex;
+        flex-flow: ${'slab' in props? 'row': 'column'};
+        flex: 100%;
+        @media screen and (max-width: 1200px) {
+            margin: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .item {
+            font-size: ${'slab' in props? '50px': '120px'};
+            font-weight: bold;
+            text-align: center;
+            margin: auto;
+            width: 100%;
+            max-width: ${'slab' in props? '110px': 'auto'};
+            @media screen and (max-width: 1200px) {
+                max-width: ${'slab' in props? '150px': 'auto'};
+                font-size: ${'slab' in props? '80px': '130px'};
+            }
+        }
+        .subject {
+            font-size: ${'slab' in props? '30px': '25px'};
+            text-align: center;
+            margin: auto;
+            width: 100%;
+        }
+    `
+    return (
+        <Container>
+            <div className="item">{props.item}</div>
+            <div className="subject">{props.subject}</div>
+        </Container>
+    )
+}
+export const PartnerContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    overflow: auto;
+    margin: auto;
+    --ms-overflow-style: none;
+    scrollbar-width: none;
 
+    .psSlideImageContainer {
+        margin: auto;
+    }
+`
 export const RoadMapContainer = styled.div`
     width: 100%;
     display: flex;

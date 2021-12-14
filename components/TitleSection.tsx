@@ -4,6 +4,7 @@ import { Section, Stack, TitleSectionWordings, ScrollDown, Button } from './Styl
 
 import grand_canyon from '../media/img/grand_canyon.png'
 import female_hero from '../media/img/femal-superhero-silhouette.png'
+import super_hero from '../media/img/superhero/superhero4.png'
 
 const TitleSection = (props: any) => {
     const rellaxRef = useRef<HTMLDivElement>(null);
@@ -40,7 +41,8 @@ const TitleSection = (props: any) => {
                 </TitleSectionWordings>
                 <div ref={rellaxRef} className="fhero">
                     <div className="female_hero">
-                        <Image width="550px" height={"900px"} src={female_hero} alt="female_hero" />
+                        <Image width="550px" height={"900px"} src={super_hero} alt="female_hero" />
+                        {/* <Image width="550px" height={"900px"} src={female_hero} alt="female_hero" /> */}
                     </div>
                 </div>
             </Stack>

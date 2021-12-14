@@ -1,10 +1,14 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { Section, RoadMapContainer } from './Styled'
+import useSWR from 'swr'
+
 import roadmap_bg from '../media/gif/roadmap_bg.gif'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Navigation, Pagination, Scrollbar, Parallax, Mousewheel, EffectCoverflow } from 'swiper'
-SwiperCore.use([Navigation, Pagination, Scrollbar, Parallax, Mousewheel, EffectCoverflow]);
+import SwiperCore, { Scrollbar, Mousewheel } from 'swiper'
+SwiperCore.use([Scrollbar, Mousewheel]);
+
+const fetcher = (url:string) => fetch(url).then((res) => res.json())
 
 const RoadMapBlock = (props:any) => {
     const data = 'data' in props ? props.data : null
@@ -30,37 +34,12 @@ const RoadMapBlock = (props:any) => {
 }
 
 const RoadMapSection = (props:any) => {
-    const roadmapSwiper = useRef(null);
-    const rmSwiperConfig = {
-        centeredSlides: true,
-        grabCursor: true,
-        updateOnWindowResize: true,
-        coverflowEffect: {
-            rotate: 0,
-            stretch: -10,
-            depth: 0,
-            modifier: 5,
-            slideShadows: false,
-        },
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: true,
-            stopOnLastSlide: true
-        },
-        preloadImages: false,
-        watchSlidesProgress: true,
-        speed: 800,
-        parallax: true,
-        mousewheel: false,
-        onSlideChange: (rmSwiper: any) => {
-            rmSwiper.update();
-        },
-        onSwiper: (swiperConf: any) => {
-            roadmapSwiper.current = swiperConf;
-        }
-    };
+    const { data, error } = useSWR('/api/roadmap', fetcher)
+    if (error) return <div>failed to load</div>
+    if (!data) return <div>loading...</div>
+
     const swiperStyle = {
-        width: '450px',
+        minWidth: '350px',
         height: '550px',
         backgroundColor: '#7e1313c2',
         backgroundSize: '400px',
@@ -69,6 +48,7 @@ const RoadMapSection = (props:any) => {
         borderRadius: '20px',
         color: 'white'
     }
+    
     return (
         <Section style={{
             backgroundImage:`url(${roadmap_bg})`,
@@ -80,29 +60,12 @@ const RoadMapSection = (props:any) => {
             boxShadow: '0px 0px 20px rgba(0,0,0,0.25)'
         }}>
             <RoadMapContainer>
-                <Swiper
-                    effect='coverflow'
-                    {...rmSwiperConfig}
-                >
-                    <SwiperSlide style={swiperStyle}>
-                        <RoadMapBlock data={{
-                            title: 'Q1 2021',
-                            bullets: [
-                                {
-                                    text: 'Setting up legal entity',
-                                    status: 'done'
-                                },
-                                {
-                                    text: 'Core team formation',
-                                    status: 'in_progress'
-                                },
-                                {
-                                    text: 'Premium brand creation',
-                                    status: 'idle'
-                                }
-                            ]
-                        }}/>
-                    </SwiperSlide>
+                <Swiper slidesPerView={5} centeredSlides={true} freeMode={true} spaceBetween={50}>
+                    {data.map((obj: any, index: any) => (
+                        <SwiperSlide key={index} style={swiperStyle}>
+                            <RoadMapBlock data={obj}/>
+                        </SwiperSlide>
+                    ))}
                 </Swiper>
             </RoadMapContainer>
         </Section>
