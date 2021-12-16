@@ -469,6 +469,9 @@ export const AboutContainer = styled.div`
             background-repeat: no-repeat;
             background-position: center;
             opacity: 0.1;
+            @media screen and (max-width: 1200px) {
+                background-image: none;
+            }
         }
         h1 {
             font-family: 'secularone';
@@ -502,6 +505,9 @@ export const AboutContainer = styled.div`
                 max-width: 400px;
                 min-height: 200px;
             }
+            @media screen and (max-width: 1200px) {
+                max-width: 92vw;
+            }
         }
     }
     p {
@@ -524,7 +530,8 @@ export const AboutContainer = styled.div`
             padding: 0px;
             padding-top: 70px;
             font-size: 20px;
-            text-align: justify;
+            max-width: 80vw;
+            text-align: left;
         }
     }
 `
