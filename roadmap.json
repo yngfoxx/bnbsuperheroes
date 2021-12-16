@@ -1,14 +1,14 @@
 [
     {
-        "title": "Q1",
+        "title": "PHASE 1",
         "bullets": [
             {
                 "text": "Private Presale.",
-                "status": "idle"
+                "status": "done"
             },
             {
                 "text": "Website Launch.",
-                "status": "idle"
+                "status": "in_progress"
             },
             {
                 "text": "Initial Game Concept and design V1.",
@@ -49,7 +49,7 @@
         ]
     },
     {
-        "title": "Q2",
+        "title": "PHASE 2",
         "bullets": [
             {
                 "text": "Implementation of New Marketing Strategies and Continued Marketing.",
@@ -86,7 +86,7 @@
         ]
     },
     {
-        "title": "Q3",
+        "title": "PHASE 3",
         "bullets": [
             {
                 "text": "Continuing Marketing Strategies.",
@@ -115,7 +115,7 @@
         ]
     },
     {
-        "title": "Q4",
+        "title": "PHASE 4",
         "bullets": [
             {
                 "text": "Building Alliances with Multiple Projects Across the Crypto Space",

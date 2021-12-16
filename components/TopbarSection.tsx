@@ -1,16 +1,21 @@
 import React from 'react'
-import { TopBar, TBItem, Logo, Curve } from './Styled'
+import { TopBar, TBItem, Logo } from './Styled'
+import { Bars } from './icon/filled'
 
 const TopbarSection = (props:any) => {
     return (
         <TopBar>
-            <TBItem>About</TBItem>
-            <TBItem>Tokenomics</TBItem>
-            <div style={{minWidth: '250px', zIndex: 999}}>
-                <Logo width="200px" height="120px" logo />
+            <TBItem mobile menuButton><Bars/></TBItem>
+            <TBItem onClick={() => props.scrollBar.current.scrollIntoView(document.querySelector('#about'))}>About</TBItem>
+            <TBItem onClick={() => props.scrollBar.current.scrollIntoView(document.querySelector('#tokenomics'))}>Tokenomics</TBItem>
+            <div style={{minWidth: '250px', zIndex: 999}} className="logo">
+                <Logo width="200px" height="120px" logo onClick={() => props.scrollBar.current.scrollIntoView(document.querySelector('#home'))}/>
             </div>
-            <TBItem>Roadmap</TBItem>
-            <TBItem>Whitepaper</TBItem>
+            <TBItem onClick={() => props.scrollBar.current.scrollIntoView(document.querySelector('#roadmap'))}>Roadmap</TBItem>
+            <TBItem onClick={() => window.open('/whitepaper.pdf', '_blank')}>Whitepaper</TBItem>
+            <div className="mobileMenu">
+                {/* MOBILE MENU */}
+            </div>
         </TopBar>
     )
 }

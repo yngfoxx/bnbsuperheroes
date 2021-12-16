@@ -1,15 +1,14 @@
 import styled from 'styled-components'
 
 import bnb_heroes_logo from '../../media/img/logo.png'
-import meteor from '../../media/img/meteor.png'
 import sky_img from '../../media/img/sky.jpg'
-
-import meteor_shower_2 from '../../media/img/tokenomic_layer_2.png'
 
 
 interface TopBarComponentProps {
     width?: string;
     height?: string;
+    mobile?: boolean;
+    menuButton?: boolean;
 }
 export const TopBar: any = styled.div<TopBarComponentProps>`
     position: fixed !important;
@@ -27,6 +26,18 @@ export const TopBar: any = styled.div<TopBarComponentProps>`
     background-color: var(--sh-pale-red);
     background-image: linear-gradient(315deg, var(--sh-pale-red) 0%, var(--sh-light-red) 50%, var(--sh-pale-red) 90%);
     z-index: 999;
+    .logo {
+        @media screen and (max-width: 800px) {
+            position: relative;
+            span {
+                right: 0px;
+                top: 0px;
+                left: auto;
+                width: 100px;
+                height: 50px;
+            }
+        }
+    }
     span {
         display: block;
     }
@@ -39,6 +50,16 @@ export const TBItem: any = styled.div<TopBarComponentProps>`
     color: var(--white);
     margin: auto 10px;
     text-align: center;
+    display: ${p => 'mobile' in p ? 'none' : 'block'};
+    cursor: pointer;
+    &:hover {
+        color: var(--sh-light-yellow);
+    }
+    @media screen and (max-width: 800px) {
+        display: ${p => 'mobile' in p ? 'block' : 'none'};
+        margin: ${p => 'menuButton' in p ? '-9px auto auto 20px' : 'auto'};
+        width: ${p => 'menuButton' in p ? '30px' : 'auto'};
+    }
 `
 
 
@@ -82,17 +103,24 @@ interface ButtonProps {
     height?: string;
     padding?: string;
     backgroundColor?: string;
+    backgroundImage?: string;
     color?: string;
     fontSize?: string;
+    margin?: string;
+    borderRadius?: string;
 }
 export const Button = styled.button<ButtonProps>`
     width: ${p => 'width' in p ? p.width : '100%'};
     height: ${p => 'height' in p ? p.height : '100%'};
     padding: ${p => 'padding' in p ? p.padding : '10px 15px'};
     background-color: ${p => 'backgroundColor' in p ? p.backgroundColor : 'var(--sh-blue)'};
+    background-image: ${p => 'backgroundImage' in p ? p.backgroundImage : 'none'};
     color: ${p => 'color' in p ? p.color : 'var(--white)'};
     font-size: ${p => 'fontSize' in p ? p.fontSize : '15px'};
+    margin: ${p => 'margin' in p ? p.margin : 'none'};
+    border-radius: ${p => 'borderRadius' in p ? p.borderRadius : '0px'};
     border: none;
+    position: relative;
     cursor: pointer;
     transition: .3s;
     &:hover {
@@ -109,6 +137,9 @@ export const Curve = (props: any) => (
 interface SectionTitleprops {
     color?: string;
     borderColor?: string;
+    animate?: string;
+    gap?: string;
+    opacity?: string;
 }
 const ST_H1 = styled.h1<SectionTitleprops>`
     font-family: 'secularone';
@@ -121,9 +152,38 @@ const ST_H1 = styled.h1<SectionTitleprops>`
     display: flex;
     z-index: 99;
     margin-top: 0px;
+    text-shadow: ${(p:any) => 'effect3d' in p ? (
+        `
+            1px 1px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 2px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 3px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 4px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 5px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 6px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 7px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 8px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 9px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 10px 1px ${'shade' in p ? p.shade : '#919191'},
+            1px 18px 6px rgba(16,16,16,0.4),
+            1px 22px 10px rgba(16,16,16,0.2),
+            1px 25px 35px rgba(16,16,16,0),
+            1px 30px 60px rgba(16,16,16,0)
+        `
+    ) : 'none'};
+    .titleText {
+        transition: transform .3s ease-in;
+        transform: ${p => 'animate' in p ? (
+            ['slideUp', 'slideUpFade', 'slideUpExpandFade'].includes(p.animate!) ? 'translateY('+p.gap+')' : 'translateY(100%)'
+        ) : 'none' };
+    }
 `
 const ST_LEFT = styled.span<SectionTitleprops>`
+    transition: transform .3s ease-in;
     width: 50%;
+    transform: ${p => 'animate' in p ? (
+        ['slideUpExpandFade'].includes(p.animate!) ? 'scaleX(0)' : 'scaleX(0)'
+    ) : '50%' };
+    transform-origin: left;
     height: 2px;
     background-color: ${p => 'borderColor' in p ? p.borderColor : 'var(--white)'};
     margin: auto;
@@ -131,7 +191,12 @@ const ST_LEFT = styled.span<SectionTitleprops>`
     font-size: 30px;
 `
 const ST_RIGHT = styled.span<SectionTitleprops>`
+    transition: transform .3s ease-in;
     width: 50%;
+    transform: ${p => 'animate' in p ? (
+        ['slideUpExpandFade'].includes(p.animate!) ? 'scaleX(0)' : 'scaleX(0)'
+    ) : '50%' };
+    transform-origin: right;
     height: 2px;
     background-color: ${p => 'borderColor' in p ? p.borderColor : 'var(--white)'};
     margin: auto;
@@ -139,9 +204,19 @@ const ST_RIGHT = styled.span<SectionTitleprops>`
 `
 export const SectionTitle = (props: any) => {
     const borderColor = 'borderColor' in props ? props.borderColor : 'var(--white)'
+
+    interface Sp { [key: string]: any }
+    let inProp = ['animate', 'gap', 'opacity']
+    let subProps: Sp = {};
+    inProp.forEach((name: any) => {        
+        if (name in props) subProps[name] = props[name]
+    })    
+
     return (
         <ST_H1 {...props}>
-            <ST_LEFT borderColor={borderColor}/>{props.children}<ST_RIGHT borderColor={borderColor}/>
+            <ST_LEFT borderColor={borderColor} {...subProps}/>
+                <div className="titleText">{props.children}</div>
+            <ST_RIGHT borderColor={borderColor} {...subProps}/>
         </ST_H1>
     )
 }
@@ -152,58 +227,59 @@ export const Section = styled.div`
     background-position: center;
     background-size: cover;
 `
-export const TitleSectionWordings = (props: any) => {
-    const Container = styled.div`
-        display: block;
-        width: 100%;
-        margin: auto;
-        margin-left: 0px;
-        flex: 50%;
-        .ctitle {
-            position: relative;
-            width: max-content;
-            &::after {
-                content: '';
-                width: 15px;
-                height: 100%;
-                background-color: var(--sh-light-yellow);
-                position: absolute;
-                top: 0px;
-                left: 0px;
-                @media screen and (max-width: 1200px) {
-                    width: 10px;
-                }
-            }
-        }
-        h1 {
-            font-family: 'secularone';
-            font-size: 90px;
-            line-height: 80px;
-            margin-bottom: 0px;
-            position: relative;
-            padding-left: 40px;
-            width: 100%;
-            overflow: hidden;
-            filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 1));
+
+const TS_Container = styled.div`
+    display: block;
+    width: 100%;
+    margin: auto;
+    margin-left: 0px;
+    flex: 50%;
+    .ctitle {
+        position: relative;
+        width: max-content;
+        &::after {
+            content: '';
+            width: 15px;
+            height: 100%;
+            background-color: var(--sh-light-yellow);
+            position: absolute;
+            top: 0px;
+            left: 0px;
             @media screen and (max-width: 1200px) {
-                font-size: 50px;
-                line-height: 50px;
-                padding-left: 20px;
+                width: 10px;
             }
         }
-        p {
-            font-size: 30px;
-            margin: 0px;
+    }
+    h1 {
+        font-family: 'secularone';
+        font-size: 90px;
+        line-height: 80px;
+        margin-bottom: 0px;
+        position: relative;
+        padding-left: 40px;
+        width: 100%;
+        overflow: hidden;
+        filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 1));
+        @media screen and (max-width: 1200px) {
+            font-size: 50px;
+            line-height: 50px;
+            padding-left: 20px;
         }
-    `
+    }
+    p {
+        font-size: 30px;
+        margin: 0px;
+    }
+`
+export const TitleSectionWordings = (props: any) => {
     return (
-        <Container>
+        <TS_Container>
             <div className="ctitle">
                 <h1>{props.title}</h1>
             </div>
             <p>{props.body}</p>
             {props.children}
-        </Container>
+        </TS_Container>
     )
 }
 export const ScrollDown = styled.span`
@@ -234,17 +310,6 @@ export const ScrollDown = styled.span`
         top: 0;
         right: 17.5px;
     }
-`
-export const MeteorShower = styled.div`
-    position: absolute;
-    bottom: -300px;
-    left: 0;
-    width: 100%;
-    height: 700px;
-    z-index: 9;
-    background-image: url(${meteor});
-    background-position: center;
-    background-repeat: no-repeat;
 `
 export const ComicContainer = styled.div`
     display: grid;
@@ -343,7 +408,6 @@ export const AboutContainer = styled.div`
         border-radius: 20px;
         position: relative;
         max-width: 400px;
-        min-width: 300px !important;
         height: 400px;
         flex: 100%;
         transition: opacity .3s ease-in;
@@ -352,6 +416,50 @@ export const AboutContainer = styled.div`
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(1.3);
+            width: 400px !important;
+            height: 400px !important;
+        }
+        @media screen and (max-width: 1200px) {
+            transform: translate(0, 0) !important;
+            max-width: 75vw;
+            /* height: auto; */
+        }
+    }
+
+    .how_to_buy {
+        text-align: center;
+        h1 {
+            font-family: 'secularone';
+            font-size: 4vw;
+            color: var(--white);
+            position: relative;
+            margin-bottom: 90px;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: -10px;
+                transform: translate(-50%, 0%);
+                width: 10vw;
+                height: 3px;
+                background-color: var(--white);
+            }
+            @media screen and (max-width: 1200px) {
+                font-size: 40px;
+            }
+        }
+        .htbStep {
+            margin: auto;
+            h3 {
+                color: var(--sh-yellow);
+            }
+            p {
+                padding: 0px;
+                font-size: 20px;
+                text-align: center;
+                max-width: 400px;
+                min-height: 200px;
+            }
         }
     }
     p {
@@ -381,6 +489,7 @@ export const AboutContainer = styled.div`
 export const TokenomicContainer = styled.div`
     max-width: 80vw;
     margin: auto;
+    position: relative;
     @media screen and (max-width: 1200px) {
         max-width: 100vw !important;
     }
@@ -390,20 +499,30 @@ export const TokenomicContainer = styled.div`
             width: 100%;
         }
     }
+    .super_hero_6 {
+        position: absolute;
+        bottom: -40%;
+        left: -20%;
+        z-index: 999;
+        
+    }
 `
 export const TokenomicTab = (props: any) => {
     const Container = styled.div`
         background-color: #96c8fb;
-        background-image: linear-gradient(315deg, #96c8fb 0%, #ddbdfc 74%);
+        background-image: linear-gradient(315deg, #B78628 0%, #FCC201 54%, #B78628 80%);
+        background-size: cover;
         color: var(--white);
         max-width: 350px;
         height: ${'slab' in props? '190px': '400px'};
-        padding: 10px 15px;
+        padding: 10px 14px;
         border-radius: 15px;
         margin: 20px 40px;
         display: flex;
         flex-flow: ${'slab' in props? 'row': 'column'};
         flex: 100%;
+        position: relative;
+        filter: drop-shadow(-1px -13px 6px rgba(0,0,0,0.5));
         @media screen and (max-width: 1200px) {
             margin: auto;
             margin-top: 20px;
@@ -416,21 +535,24 @@ export const TokenomicTab = (props: any) => {
             margin: auto;
             width: 100%;
             max-width: ${'slab' in props? '110px': 'auto'};
+            filter: drop-shadow(${'slab' in props? '-2px 3px 2px' : '-2px 7px 4px'} rgba(255, 255, 255, 1));
             @media screen and (max-width: 1200px) {
                 max-width: ${'slab' in props? '150px': 'auto'};
                 font-size: ${'slab' in props? '80px': '130px'};
             }
         }
         .subject {
-            font-size: ${'slab' in props? '30px': '25px'};
+            font-size: 30px;
             text-align: center;
+            font-weight: 600;
+            font-family: sans-serif;
             margin: auto;
             width: 100%;
         }
     `
     return (
-        <Container>
-            <div className="item">{props.item}</div>
+        <Container className={props.className}>
+            <div className="item" data-item={props.item}>0%</div>
             <div className="subject">{props.subject}</div>
         </Container>
     )
@@ -448,7 +570,11 @@ export const PartnerContainer = styled.div`
         margin: auto;
     }
 `
-export const RoadMapContainer = styled.div`
+
+interface RoadMapProps {
+    mobile?: boolean;
+}
+export const RoadMapContainer = styled.div<RoadMapProps>`
     width: 100%;
     display: flex;
     flex-flow: row;
@@ -456,31 +582,52 @@ export const RoadMapContainer = styled.div`
     margin: auto;
     --ms-overflow-style: none;
     scrollbar-width: none;
+    display: ${p => 'mobile' in p ? 'none' : 'block'};
 
     &::-webkit-scrollbar {
         display: none;
     }
 
+    .swiper-slide {
+        transition: all .5s ease-in;
+        opacity: 0.3;
+        transform: scale(.8)!important;
+        &.swiper-slide-active {
+            opacity: 1;
+            transform: scale(1)!important;
+        }
+    }
+
     .block {
         margin: auto;
         padding: 10px 25px;
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
         height: 100%;
+        width: 100%;
         h2 {
-            text-align: left;
-            border-bottom: 3px solid #b08f66;
-            padding-bottom: 5px;
+            background-color: var(--sh-pale-red);
+            background-image: linear-gradient(315deg, var(--sh-pale-red) 0%, var(--sh-light-red) 50%, var(--sh-pale-red) 90%);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
             font-family: sans-serif;
             margin-bottom: 0px;
         }
         ul {
             list-style: none;
-            padding-left: 20px;
+            background-color: var(--sh-trans-brown);
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 10px;
+            /* max-height: 400px; */
+            overflow: visible;
             li {
                 line-height: 30px;
                 position: relative;
+                padding: 5px 10px 5px 30px;
+                border-bottom: 1px solid var(--sh-brown);
+                &:last-child {
+                    border-bottom: none;
+                }
                 &::after {
                     content: '';
                     width: 10px;
@@ -488,19 +635,25 @@ export const RoadMapContainer = styled.div`
                     position: absolute;
                     top: 50%;
                     left: 0;
-                    transform: translate(-50%, 0%);
+                    transform: translate(0%, -50%);
                     z-index: 99;
+                    border-radius: 50%;
                 }
                 &[data-status="done"]::after {
                     background-color: var(--sh-green);
                 }
                 &[data-status="in_progress"]::after {
-                    background-color: var(--sh-blue);
+                    background-color: var(--sh-yellow);
                 }
                 &[data-status="idle"]::after {
                     background-color: var(--sh-grey);
                 }
             }
         }
+    }
+
+    @media screen and (max-width: 1310px) {
+        display: ${p => 'mobile' in p ? 'block' : 'none'};
+        color: var(--white);
     }
 `

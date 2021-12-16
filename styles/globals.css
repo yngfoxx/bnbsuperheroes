@@ -4,6 +4,7 @@
   --sh-green:         #0ddd26;
   --sh-black:         #050505;  
   --sh-grey:          #242424;
+  --sh-dark-grey:     #151515;
   --sh-yellow:        #FEBB38;
   --sh-dull-yellow:   #E4A80C;
   --sh-dark-yellow:   #BE7E02;
@@ -13,6 +14,7 @@
   --sh-pale-red:      #7F1313;
   --sh-trans-red:     #b90103c7;
   --sh-brown:         #782B00;
+  --sh-trans-brown:   #782B00c7;
   --sh-blue:          #054EAA;
 }
 
@@ -50,7 +52,7 @@ a {
   color: var(--sh-light-yellow) !important;
 }
 
-.fhero {
+.heroImage {
   animation: hero_float 6s ease-in-out infinite;
   max-width: max-content;
   margin: auto;
@@ -62,7 +64,7 @@ a {
 }
 
 @media screen and (max-width: 1450px) {
-  .fhero {
+  .heroImage, .super_hero_4, .super_hero_6 {
     display: none;
   }
 }

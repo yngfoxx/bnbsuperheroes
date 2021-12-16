@@ -2,11 +2,10 @@ import React from 'react'
 import { Section, RoadMapContainer } from './Styled'
 import useSWR from 'swr'
 
-import roadmap_bg from '../media/gif/roadmap_bg.gif'
-
+import "swiper/css/effect-coverflow"
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Scrollbar, Mousewheel } from 'swiper'
-SwiperCore.use([Scrollbar, Mousewheel]);
+import SwiperCore, { EffectCoverflow } from 'swiper'
+SwiperCore.use([EffectCoverflow]);
 
 const fetcher = (url:string) => fetch(url).then((res) => res.json())
 
@@ -39,34 +38,55 @@ const RoadMapSection = (props:any) => {
     if (!data) return <div>loading...</div>
 
     const swiperStyle = {
-        minWidth: '350px',
-        height: '550px',
-        backgroundColor: '#7e1313c2',
-        backgroundSize: '400px',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
+        minWidth: '300px',
+        minHeight: '550px',
         borderRadius: '20px',
         color: 'white'
     }
     
     return (
         <Section style={{
-            backgroundImage:`url(${roadmap_bg})`,
-            width: '95%!important',
             margin: 'auto',
             borderRadius: '20px',
             display: 'flex',
-            minHeight: '700px',
-            boxShadow: '0px 0px 20px rgba(0,0,0,0.25)'
+            minHeight: '700px'
         }}>
             <RoadMapContainer>
-                <Swiper slidesPerView={5} centeredSlides={true} freeMode={true} spaceBetween={50}>
+                <Swiper
+                    effect={'coverflow'}
+                    grabCursor={true}
+                    centeredSlides={true}
+                    slidesPerView={5}
+                    updateOnWindowResize={true}
+                    coverflowEffect={{
+                        rotate: 0,
+                        stretch: 0,
+                        depth: 100,
+                        modifier: 1,
+                        slideShadows: false
+                    }}
+                    speed={700}
+                    onSlideChange={(slider) => {
+                        slider.update();
+                    }}
+                    style={{
+                        width: '100%',
+                        overflowY: 'visible'
+                    }}
+                >
                     {data.map((obj: any, index: any) => (
                         <SwiperSlide key={index} style={swiperStyle}>
                             <RoadMapBlock data={obj}/>
                         </SwiperSlide>
                     ))}
                 </Swiper>
+            </RoadMapContainer>
+            
+            {/* Roadmap view for smaller screen size */}
+            <RoadMapContainer mobile>
+                {data.map((obj: any, index: any) => (
+                    <RoadMapBlock key={index} data={obj}/>
+                ))}
             </RoadMapContainer>
         </Section>
     )
