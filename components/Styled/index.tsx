@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 
-import super_hero from '../../media/img/superhero/superhero4.png'
 import bnb_heroes_logo from '../../media/img/logo.png'
 import sky_img from '../../media/img/sky.jpg'
 import bsh_banner from '../../media/img/bsh_banner.png'
-import { url } from 'inspector'
 
 
 interface TopBarComponentProps {
