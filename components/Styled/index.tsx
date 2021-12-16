@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 
+import super_hero from '../../media/img/superhero/superhero4.png'
 import bnb_heroes_logo from '../../media/img/logo.png'
 import sky_img from '../../media/img/sky.jpg'
+import bsh_banner from '../../media/img/bsh_banner.png'
+import { url } from 'inspector'
 
 
 interface TopBarComponentProps {
@@ -40,6 +43,24 @@ export const TopBar: any = styled.div<TopBarComponentProps>`
     }
     span {
         display: block;
+    }
+    .mobileMenu {
+        overflow: hidden;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 60px;
+        background-color: var(--sh-trans-brown);
+        & > div {
+            padding: 20px 10px;
+            text-align: left;
+        }
+        &[data-state="true"] {
+            max-height: none;
+        }
+        &[data-state="false"] {
+            max-height: 0px;
+        }
     }
 `
 export const TBItem: any = styled.div<TopBarComponentProps>`
@@ -258,10 +279,10 @@ const TS_Container = styled.div`
         position: relative;
         padding-left: 40px;
         width: 100%;
-        overflow: hidden;
+        /* overflow: hidden; */
         filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 1));
         @media screen and (max-width: 1200px) {
-            font-size: 50px;
+            font-size: 10vw;
             line-height: 50px;
             padding-left: 20px;
         }
@@ -428,6 +449,20 @@ export const AboutContainer = styled.div`
 
     .how_to_buy {
         text-align: center;
+        position: relative;
+        &::before {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url(${bsh_banner});
+            background-size: 40vw;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.1;
+        }
         h1 {
             font-family: 'secularone';
             font-size: 4vw;
@@ -552,7 +587,7 @@ export const TokenomicTab = (props: any) => {
     `
     return (
         <Container className={props.className}>
-            <div className="item" data-item={props.item}>0%</div>
+            <div className="item" data-item={props.item}>{props.item}%</div>
             <div className="subject">{props.subject}</div>
         </Container>
     )

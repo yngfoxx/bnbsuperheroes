@@ -37,7 +37,12 @@ const TitleSection = (props: any) => {
                     body="Introducing play to earn in an action filled superheroes endless runner game."
                 >
                     <br />
-                    <Button margin="0px 5px" width="300px" padding="18px">FLY WITH US!</Button>
+                    <Button 
+                        margin="0px 5px"
+                        width="300px"
+                        padding="18px" 
+                        onClick={() => props.scrollBar.current.scrollIntoView(document.querySelector('#about'))}
+                    >FLY WITH US!</Button>
                     <br /><br />
 
                     <div style={{display: 'flex'}}>

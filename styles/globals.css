@@ -63,9 +63,19 @@ a {
   opacity: 0;
 }
 
+.marketingSection {
+
+}
+
 @media screen and (max-width: 1450px) {
-  .heroImage, .super_hero_4, .super_hero_6 {
+  .super_hero_6 {
     display: none;
+  }
+
+  .heroImage {
+    position: absolute;
+    top: -55%;
+    z-index: -1;
   }
 }
 @keyframes hero_float {

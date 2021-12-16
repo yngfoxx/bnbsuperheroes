@@ -16,7 +16,7 @@ import TokenomicSection from '../components/TokenomicSection'
 const Home: NextPage = () => {
   const bodyRef = useRef<HTMLDivElement>(null)
   const scrollBar = useRef<any>(null)
-  const [tokenomicVisible, setTokenomicVisible] = useState(false)
+  const [tokenomicVisible, setTokenomicVisible] = useState(false) // ! not needed
 
   /*-> Section refs <-*/
   const TopbarSecRef = useRef<HTMLDivElement>(null)
@@ -31,10 +31,12 @@ const Home: NextPage = () => {
     scrollBar.current.addListener(() => {
       const offset = scrollBar.current.offset
       const currentY = offset.y
+      const screenWidth = window.innerWidth
       
+      let screenRange = screenWidth >= 1080 ? [-2, 500] : [-2, 500]
       
       // Title section
-      if (currentY >= -2 && currentY <  500)
+      if (currentY >= screenRange[0] && currentY <  screenRange[1])
         document.querySelector<HTMLDivElement>('.super_hero_4')!.style.transform = `translateY(${currentY * 0.13}px)`
         
       // About section
@@ -46,7 +48,8 @@ const Home: NextPage = () => {
         aboutTitle.children[2]  as HTMLDivElement
       ]
       let airdropImgElement = document.querySelector<HTMLDivElement>('.airdrop_img')!
-      if (currentY >= 380 && currentY <  1000) {
+      screenRange = screenWidth >= 1080 ? [380, 1000] : [300, 1000]
+      if (currentY >= screenRange[0] && currentY <  screenRange[1]) {
         let movX = (currentY * 0.045) - 20
         let movY = (currentY * 0.045) - 20
 
@@ -75,15 +78,14 @@ const Home: NextPage = () => {
         tknTitle.children[2]  as HTMLDivElement
       ]
 
-      let tknomicScreenRange = [2450, 3900]
+      screenRange = screenWidth >= 1080 ? [2450, 3900] : [4000, 6400]
 
-      if (currentY >= 2600 && currentY <  3200) {
+      if (currentY >= (screenRange[0] + 150) && currentY <  (screenRange[1] + 700)) {
         let scale = currentY * 0.0004;
         superHero6.style.transform = `scale(${scale})`
       }
-      if (currentY > tknomicScreenRange[0] && currentY <  tknomicScreenRange[1]) setTokenomicVisible(true)
-      if (currentY < tknomicScreenRange[0] || currentY > tknomicScreenRange[1]) setTokenomicVisible(false) // reset counter
-      if (currentY > tknomicScreenRange[0] && currentY <  tknomicScreenRange[1]) {
+
+      if (currentY > screenRange[0] && currentY <  screenRange[1]) {
         // title
         tknText.style.transform = 'translateY(0)'
         tknLbar.style.transform = 'scaleX(100%)'
@@ -102,7 +104,8 @@ const Home: NextPage = () => {
         rmTitle.children[0]  as HTMLDivElement,
         rmTitle.children[2]  as HTMLDivElement
       ]
-      if (currentY > 3550 && currentY <  4300) {
+      screenRange = screenWidth >= 1080 ? [3550, 4300] : [6100, 8600]
+      if (currentY > screenRange[0] && currentY <  screenRange[1]) {
          // title
          rmText.style.transform = 'translateY(0)';
          rmLbar.style.transform = 'scaleX(100%)';
@@ -207,14 +210,14 @@ const Home: NextPage = () => {
         </div>
 
         {/* MARKETING */}
-        <div style={{
+        <div className="marketingSection" style={{
           backgroundImage: `url(${bsh_banner})`,
           backgroundPosition: 'center',
           backgroundSize: '40%',
           backgroundRepeat: 'no-repeat',
           height: '700px',
           backgroundColor: 'rgb(111 78 34)',
-          marginTop: '-20px'
+          marginTop: '-20px',
         }}>
         </div>
 
