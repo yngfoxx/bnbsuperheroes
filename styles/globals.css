@@ -63,9 +63,6 @@ a {
   opacity: 0;
 }
 
-.marketingSection {
-
-}
 
 @media screen and (max-width: 1450px) {
   .super_hero_6 {
@@ -74,10 +71,17 @@ a {
 
   .heroImage {
     position: absolute;
-    top: -55%;
+    margin-top: 0px;
+    top: 0;
+    left: 5vw;
     z-index: -1;
   }
+
+  .marketingSection {
+    background-size: 90% !important;
+  }
 }
+
 @keyframes hero_float {
   from {
     transform: translateY(0px);

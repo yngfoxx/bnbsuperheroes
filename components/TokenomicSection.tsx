@@ -14,7 +14,7 @@ const TokenomicSection = (props: any) => {
             let tabItem: any = tab.children[0].getAttribute('data-item')!.valueOf()
             let y = 0
             const increment = setInterval(() => {
-                tab.children[0].innerHTML = `${y}%`
+                tab.children[0].children[0].innerHTML = `${y}`
                 y += 1
                 if (y > tabItem) clearInterval(increment)
             }, props.animationSpeed)

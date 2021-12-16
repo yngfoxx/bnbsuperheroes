@@ -195,6 +195,9 @@ const ST_H1 = styled.h1<SectionTitleprops>`
             ['slideUp', 'slideUpFade', 'slideUpExpandFade'].includes(p.animate!) ? 'translateY('+p.gap+')' : 'translateY(100%)'
         ) : 'none' };
     }
+    @media screen and (max-width: 1200px) {
+        font-size: 10vw;
+    }
 `
 const ST_LEFT = styled.span<SectionTitleprops>`
     transition: transform .3s ease-in;
@@ -288,6 +291,9 @@ const TS_Container = styled.div`
     p {
         font-size: 30px;
         margin: 0px;
+        @media screen and (max-width: 800px) {
+            font-size: 4vw;
+        }
     }
 `
 export const TitleSectionWordings = (props: any) => {
@@ -328,6 +334,9 @@ export const ScrollDown = styled.span`
         position: absolute;
         top: 0;
         right: 17.5px;
+    }
+    @media screen and (max-width: 800px) {
+        left: 45%;
     }
 `
 export const ComicContainer = styled.div`
@@ -410,7 +419,7 @@ export const ComicContainer = styled.div`
     }
 `
 export const AboutContainer = styled.div`
-    max-width: 95vw;
+    max-width: 100vw;
     width: max-content;
     margin: auto;
     @media screen and (max-width: 1200px) {
@@ -436,12 +445,12 @@ export const AboutContainer = styled.div`
             left: 50%;
             transform: translate(-50%, -50%) scale(1.3);
             width: 400px !important;
-            height: 400px !important;
+            height: 400px;
         }
         @media screen and (max-width: 1200px) {
             transform: translate(0, 0) !important;
-            max-width: 75vw;
-            /* height: auto; */
+            max-width: 80vw;
+            max-height: 350px;
         }
     }
 
@@ -561,17 +570,32 @@ export const TokenomicTab = (props: any) => {
             margin-top: 20px;
             margin-bottom: 20px;
         }
+
+        @media screen and (max-width: 800px) {
+            max-width: 85vw;
+            height: ${'slab' in props? '90px': '300px'};
+        }
         .item {
-            font-size: ${'slab' in props? '50px': '120px'};
+            font-size: ${'slab' in props? '25px': '50px'};
             font-weight: bold;
             text-align: center;
             margin: auto;
             width: 100%;
             max-width: ${'slab' in props? '110px': 'auto'};
             filter: drop-shadow(${'slab' in props? '-2px 3px 2px' : '-2px 7px 4px'} rgba(255, 255, 255, 1));
+            span {
+                font-size: ${'slab' in props? '90px': '150px'};
+            }
             @media screen and (max-width: 1200px) {
                 max-width: ${'slab' in props? '150px': 'auto'};
                 font-size: ${'slab' in props? '80px': '130px'};
+            }
+            @media screen and (max-width: 800px) {
+                span {
+                    font-size: ${'slab' in props? '50px': '150px'};
+                }
+                max-width: ${'slab' in props? '80px': 'auto'};
+                font-size: ${'slab' in props? '30px': '80px'};
             }
         }
         .subject {
@@ -585,7 +609,7 @@ export const TokenomicTab = (props: any) => {
     `
     return (
         <Container className={props.className}>
-            <div className="item" data-item={props.item}>{props.item}%</div>
+            <div className="item" data-item={props.item}><span>{props.item}</span>%</div>
             <div className="subject">{props.subject}</div>
         </Container>
     )

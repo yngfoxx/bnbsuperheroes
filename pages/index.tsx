@@ -88,6 +88,7 @@ const Home: NextPage = () => {
 
       if (currentY > screenRange[0] && currentY <  screenRange[1]) {
         // title
+        setTokenomicVisible(true)
         tknText.style.transform = 'translateY(0)'
         tknLbar.style.transform = 'scaleX(100%)'
         tknRbar.style.transform = 'scaleX(100%)'
