@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import Head from 'next/head'
 import type { NextPage } from 'next'
 import TopbarSection from '../components/TopbarSection'
@@ -27,6 +27,15 @@ const Home: NextPage = () => {
   const RoadmapSecRef = useRef<HTMLDivElement>(null)
   const FooterSecRef = useRef<HTMLDivElement>(null)
 
+  const elementOffset = useCallback((el: HTMLElement) => {
+    var rect = el.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    let elHeight = el.offsetHeight
+
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft, height: elHeight }
+  }, [])
+
   useEffect(() => {
     scrollBar.current = Scrollbar.init(bodyRef.current!)
     scrollBar.current.addListener(() => {
@@ -36,12 +45,13 @@ const Home: NextPage = () => {
       
       let screenRange = screenWidth >= 1080 ? [-2, 500] : [-2, 500]
       
-      // Title section
+      // Title section ----------------------------------------------------------------->
       if (currentY >= screenRange[0] && currentY <  screenRange[1])
         document.querySelector<HTMLDivElement>('.super_hero_4')!.style.transform = `translateY(${currentY * 0.13}px)`
+      // ------------------------------------------------------------------------------->
         
-      // About section
-      let aboutSection = AboutSecRef.current!
+      // About section ----------------------------------------------------------------->
+      let aboutSection = AboutSecRef.current!      
       let aboutTitle = aboutSection.children[0].children[0] as HTMLHeadingElement
       let abtText = aboutTitle.children[1] as HTMLDivElement
       let [abtLbar, abtRbar] = [
@@ -49,27 +59,32 @@ const Home: NextPage = () => {
         aboutTitle.children[2]  as HTMLDivElement
       ]
       let airdropImgElement = document.querySelector<HTMLDivElement>('.airdrop_img')!
-      screenRange = screenWidth >= 1080 ? [380, 1000] : [300, 1000]
-      if (currentY >= screenRange[0] && currentY <  screenRange[1]) {
-        let movX = (currentY * 0.045) - 20
-        let movY = (currentY * 0.045) - 20
-
-        // title
-        abtText.style.transform = 'translateY(0)'
-        abtLbar.style.transform = 'scaleX(100%)'
-        abtRbar.style.transform = 'scaleX(100%)'
+      let movX = (currentY * 0.045) - 20
+      let movY = (currentY * 0.045) - 20
       
-        // airdrop image
-        airdropImgElement.style.transform = `translate(${movX}px, ${movY}px)`
-        airdropImgElement.style.opacity = '1'
+      airdropImgElement.style.backgroundPosition = '-'+(movX + 2)+'px -'+(movY + 2)+'px'
+      
+      let abtOffset = elementOffset(aboutSection)
+      let abtAnimOffset = 300
+      let abtDerivedOffset = abtOffset.top + abtOffset.height - abtAnimOffset
+      if (abtOffset.height > abtDerivedOffset && abtDerivedOffset > abtAnimOffset) {
+         // title
+         abtText.style.transform = 'translateY(0)'
+         abtLbar.style.transform = 'scaleX(100%)'
+         abtRbar.style.transform = 'scaleX(100%)'
+       
+         // airdrop image
+         airdropImgElement.style.transform = `translate(${movX}px, ${movY}px)`
+         airdropImgElement.style.opacity = '1'
       } else {
         if (currentY > 1400) airdropImgElement.style.opacity = '0'
         abtText.style.transform = `translateY(100%)`
         abtLbar.style.transform = 'scaleX(0)'
         abtRbar.style.transform = 'scaleX(0)'
       }
+      // ------------------------------------------------------------------------------->
 
-      // Tokenomics section
+      // Tokenomics section ------------------------------------------------------------>
       let tokenomicSection = TokenomicSecRef.current!
       let superHero6 = document.querySelector<HTMLDivElement>('.super_hero_6')!
       let tknTitle = tokenomicSection.children[1] as HTMLHeadingElement
@@ -78,27 +93,32 @@ const Home: NextPage = () => {
         tknTitle.children[0]  as HTMLDivElement,
         tknTitle.children[2]  as HTMLDivElement
       ]
+      let tokenomicsOffset = elementOffset(tokenomicSection)
+      let tokenomicsAnimOffset = 300
+      let tokenomicsAnimExitOffset = -200
+      let tokenomicsDerivedOffset = tokenomicsOffset.top + tokenomicsOffset.height - tokenomicsAnimOffset
 
       screenRange = screenWidth >= 1080 ? [2450, 3900] : [4000, 6400]
-
       if (currentY >= (screenRange[0] + 150) && currentY <  (screenRange[1] + 700)) {
         let scale = currentY * 0.0004;
         superHero6.style.transform = `scale(${scale})`
       }
 
-      if (currentY > screenRange[0] && currentY <  screenRange[1]) {
+      if (tokenomicsOffset.height > tokenomicsDerivedOffset && tokenomicsDerivedOffset > tokenomicsAnimExitOffset) {
         // title
         setTokenomicVisible(true)
         tknText.style.transform = 'translateY(0)'
         tknLbar.style.transform = 'scaleX(100%)'
         tknRbar.style.transform = 'scaleX(100%)'
       } else {
+        setTokenomicVisible(false)
         tknText.style.transform = `translateY(100%)`
         tknLbar.style.transform = 'scaleX(0)'
         tknRbar.style.transform = 'scaleX(0)'
       }
+      // ------------------------------------------------------------------------------->
 
-      // Roadmap section
+      // Roadmap section --------------------------------------------------------------->
       let roadmapSection = RoadmapSecRef.current!
       let rmTitle = roadmapSection.children[1] as HTMLHeadingElement
       let rmText = rmTitle.children[1] as HTMLDivElement
@@ -106,8 +126,10 @@ const Home: NextPage = () => {
         rmTitle.children[0]  as HTMLDivElement,
         rmTitle.children[2]  as HTMLDivElement
       ]
-      screenRange = screenWidth >= 1080 ? [3550, 4300] : [6100, 8600]
-      if (currentY > screenRange[0] && currentY <  screenRange[1]) {
+      let roadmapOffset = elementOffset(roadmapSection)
+      let roadmapAnimOffset = 300
+      let roadmapDerivedOffset = roadmapOffset.top + roadmapOffset.height - roadmapAnimOffset
+      if (roadmapOffset.height > roadmapDerivedOffset && roadmapDerivedOffset > roadmapAnimOffset) {
          // title
          rmText.style.transform = 'translateY(0)';
          rmLbar.style.transform = 'scaleX(100%)';
@@ -117,6 +139,7 @@ const Home: NextPage = () => {
         rmLbar.style.transform = 'scaleX(0)';
         rmRbar.style.transform = 'scaleX(0)';
       }
+      // ------------------------------------------------------------------------------->
     })
   }, [])
 

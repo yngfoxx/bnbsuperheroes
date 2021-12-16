@@ -48,7 +48,7 @@ export const TopBar: any = styled.div<TopBarComponentProps>`
         left: 0px;
         right: 0px;
         top: 60px;
-        background-color: var(--sh-trans-brown);
+        background-color: var(--sh-dark-grey);
         & > div {
             padding: 20px 10px;
             text-align: left;
@@ -616,7 +616,7 @@ export const TokenomicTab = (props: any) => {
     `
     return (
         <Container className={props.className}>
-            <div className="item" data-item={props.item}><span>{props.item}</span>%</div>
+            <div className="item" data-item={props.item}><span>0</span>%</div>
             <div className="subject">{props.subject}</div>
         </Container>
     )
