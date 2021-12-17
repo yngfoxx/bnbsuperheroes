@@ -256,17 +256,6 @@ const Home: NextPage = () => {
         }}>
         </div>
 
-        {/* FOOTER */}
-        <div ref={FooterSecRef} style={{
-          backgroundColor: 'var(--black)',
-          backgroundImage: 'linear-gradient(315deg, var(--sh-dark-grey) 0%, var(--sh-grey) 50%, var(--sh-dark-grey) 90%)',
-          color: 'var(--white)',
-          fontSize: '12px',
-          padding: '40px 20px',
-          textAlign: 'center'
-        }}>
-          Disclaimer: Crypto Currency investments are subject to market risks. Do your own research before investing. High rewards come along with High risks as well. The team or the creators of this token are not held responsible in any way for your loss or profit for that matter for the duration of your investment in the same.
-        </div>
       </div>
     </>
   )
