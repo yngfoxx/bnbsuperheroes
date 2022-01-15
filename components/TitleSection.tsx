@@ -41,7 +41,7 @@ const TitleSection = (props: any) => {
                         margin="0px 5px"
                         width="300px"
                         padding="18px" 
-                        onClick={() => props.scrollBar.current.scrollIntoView(document.querySelector('#about'))}
+                        onClick={() => window.open('http://game.bnbsuperheroes.com')}
                     >FLY WITH US!</Button>
                     <br /><br />
 
